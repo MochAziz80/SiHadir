@@ -1,17 +1,24 @@
 'use strict';
+const bcrypt = require('bcryptjs');
 
 module.exports = {
   up: async (queryInterface, Sequelize) => {
-    await queryInterface.bulkInsert('users', [
-      {
-        nama: 'Admin Kantor',
-        email: 'admin@kantor.com',
-        password: 'admin',  // Gunakan hashing password di sini
-        role: 'admin',
-        created_at: new Date(),
-        updated_at: new Date()
-      },
-    ], {});
+    try {
+      const hashedPassword = await bcrypt.hash('adminadmin', 10);
+
+      await queryInterface.bulkInsert('users', [
+        {
+          nama: 'admin',
+          email: 'admin@kantor.com',
+          password: hashedPassword,
+          role: 'admin',
+          created_at: new Date(),
+          updated_at: new Date(),
+        },
+      ], {});
+    } catch (error) {
+      console.error("Seeder error:", error);
+    }
   },
 
   down: async (queryInterface, Sequelize) => {
