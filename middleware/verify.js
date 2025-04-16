@@ -3,24 +3,24 @@ const { body, validationResult } = require('express-validator');
 
 
 const authenticateJWT = (req, res, next) => {
-    const token = req.headers['authorization']?.split(' ')[1]; // Ambil token dari header Authorization
+    const token = req.headers['authorization']?.split(' ')[1];
 
     if (token) {
         jwt.verify(token, '00', (err, user) => {
             if (err) {
-                return res.sendStatus(403); // Token tidak valid
+                return res.sendStatus(403); 
             }
-            req.user = user; // Simpan informasi pengguna di req.user
-            next(); // Lanjutkan ke route berikutnya
+            req.user = user;
+            next(); 
         });
     } else {
-        res.sendStatus(401); // Tidak ada token
+        res.sendStatus(401);
     }
 };
 
 const isAdmin = (req, res, next) => {
   if (req.user && req.user.role === 'admin') {
-      next(); // Jika pengguna adalah admin, lanjutkan ke route berikutnya
+      next();
   } else {
       return res.status(403).json({ message: 'Access denied. Admins only.' });
   }

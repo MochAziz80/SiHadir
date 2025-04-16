@@ -5,7 +5,7 @@ const absensiRoutes = require('./routes/absensiRoutes');
 const tokenRoutes = require('./routes/tokenRoutes');
 const authRoutes = require('./routes/authRoutes');
 
-const db = require('./models'); // Mengimpor model dari folder models
+const db = require('./models'); 
 
 const app = express();
 const PORT = process.env.PORT || 3000;
